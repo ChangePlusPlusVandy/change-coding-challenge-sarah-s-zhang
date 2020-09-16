@@ -1,5 +1,6 @@
 import requests
 import json
+import random
 
 # To set your enviornment variables in your terminal run the following line:
 # export 'BEARER_TOKEN'='<your_bearer_token>'
@@ -10,18 +11,13 @@ def auth():
 
 def welcome():
     print("Hello! Welcome to the Tweet Guessing Game.")
-    print("Given a tweet by one of two individuals, you will guess who wrote the tweet.")
+    print("Given a tweet by one of two individuals, guess who wrote the tweet!")
+
 
 def create_url(username):
-    # Tweet fields are adjustable.
-    # Options include:
-    # attachments, author_id, context_annotations,
-    # conversation_id, created_at, entities, geo, id,
-    # in_reply_to_user_id, lang, non_public_metrics, organic_metrics,
-    # possibly_sensitive, promoted_metrics, public_metrics, referenced_tweets,
-    # source, text, and withheld
-    url = "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name={}&count=2".format(
-        username
+    numTweets = 2
+    url = "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name={}&count={}&exclude_replies=true".format(
+        username, numTweets
     )
     return url
 
@@ -38,20 +34,41 @@ def connect_to_endpoint(url, headers):
     return response.json()
 
 
+def randomUserGenerator():
+    return random.randint(1, 2)
+
+def randomTweetGenerator(userNumber, userOneTweets, userTwoTweets):
+    if userNumber == 1:
+        tweetIndex = round(random.random()*len(userOneTweets))
+        return userOneTweets[int(tweetIndex)]
+    else:
+        tweetIndex = round(random.random()*len(userTwoTweets))
+        return userTwoTweets[int(tweetIndex)]
+
+
+def verifyGuess(userNumber, guess):
+    if userNumber == guess:
+        print("Correct!\n")
+    else:
+        print("Incorrect!\n")
+
+
 def main():
     welcome()
     bearer_token = auth()
     headers = create_headers(bearer_token)
 
     url = create_url("elonmusk")
-    json_response = connect_to_endpoint(url, headers)
-    userOneTweets = open("userOneTweets.txt", "w")
-    userOneTweets.write(json.dumps(json_response, indent=4, sort_keys=True))
+    json_tweets_1 = connect_to_endpoint(url, headers)
 
     url = create_url("kanyewest")
-    json_response = connect_to_endpoint(url, headers)
-    userTwoTweets = open("userTwoTweets.txt", "w")
-    userTwoTweets.write(json.dumps(json_response, indent=4, sort_keys=True))
+    json_tweets_2 = connect_to_endpoint(url, headers)
+
+    userNumber = randomUserGenerator()
+    jsonTweet = randomTweetGenerator(userNumber, json_tweets_1, json_tweets_2)
+    print(jsonTweet['text'])
+    guess = input("Who wrote this tweet? Enter '1' for Elon Musk, '2' for Kanye West:")
+    verifyGuess(userNumber, int(guess))
 
 
 if __name__ == "__main__":
