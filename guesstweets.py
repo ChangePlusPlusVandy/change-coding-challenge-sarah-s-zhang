@@ -1,14 +1,11 @@
 import json
 import random
-from apiconnect import ApiConnect
 
 class GuessTweets:
 
     def __init__(self, userOne, userTwo):
         self.userOne = userOne
         self.userTwo = userTwo
-        self.userOneApi = ApiConnect(userOne)
-        self.userTwoApi = ApiConnect(userTwo)
         self.totalTweetsGuessed = 0
         self.totalUserOneCorrect = 0
         self.totalUserOneIncorrect = 0
@@ -40,15 +37,15 @@ class GuessTweets:
                 self.totalUserTwoIncorrect += 1
             print("\nIncorrect!")
 
-    def getRandomTweet(self):
+    def getRandomTweet(self, userOneTweetList, userTwoTweetList):
         randomUser = random.randint(1, 2)
-        jsonTweet = self.__randomTweetGenerator(randomUser, self.userOneApi.getTweetList(), self.userTwoApi.getTweetList())
+        jsonTweet = self.__randomTweetGenerator(randomUser, userOneTweetList, userTwoTweetList)
         print(jsonTweet['text'])
         guess = input("\nWho wrote this tweet? Enter '1' for @" + self.userOne + " OR '2' for @" + self.userTwo + ": ")
         self.__verifyGuess(randomUser, guess)
     
     def getStatistics(self):
-        print("****GUESSING GAME STATISTICS****")
+        print("\n****GUESSING GAME STATISTICS****")
         print("Total tweets guessed: ", self.totalTweetsGuessed)
         print("- Total correct: ", self.totalUserOneCorrect + self.totalUserTwoCorrect)
         print("- Total incorrect: ", self.totalUserOneIncorrect + self.totalUserTwoIncorrect)

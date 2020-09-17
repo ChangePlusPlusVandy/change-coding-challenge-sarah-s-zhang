@@ -4,7 +4,11 @@ import requests
 class ApiConnect:
 
     def __init__(self, username):
-        self.username = username
+        self.__username = username
+        self.__authSuccess = False
+        headers = self.__create_headers(config.bearer_token)
+        url = self.__create_url(self.__username)
+        self.__jsonResponse = self.__connect_to_endpoint(url, headers)
 
     def __create_headers(self, bearer_token):
         headers = {"Authorization": "Bearer {}".format(bearer_token)}
@@ -20,11 +24,16 @@ class ApiConnect:
     def __connect_to_endpoint(self, url, headers):
         response = requests.request("GET", url, headers=headers)
         if response.status_code != 200:
-            raise Exception(response.status_code, response.text)
-        return response.json()
+            print("Failed to connect to Twitter. Please enter a valid username.")
+        else:
+            self.__authSuccess = True
+            return response.json()
+    
+    def getUsername(self):
+        return self.__username
+    
+    def getAuthSuccess(self):
+        return self.__authSuccess
     
     def getTweetList(self):
-        headers = self.__create_headers(config.bearer_token)
-        url = self.__create_url(self.username)
-        jsonTweets = self.__connect_to_endpoint(url, headers)
-        return jsonTweets
+        return self.__jsonResponse
