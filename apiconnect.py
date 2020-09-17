@@ -11,7 +11,7 @@ class ApiConnect:
         return headers
 
     def __create_url(self, username):
-        numTweets = 5
+        numTweets = 3200
         url = "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name={}&count={}&exclude_replies=true".format(
             username, numTweets
         )
@@ -23,7 +23,7 @@ class ApiConnect:
             raise Exception(response.status_code, response.text)
         return response.json()
     
-    def getTweets(self):
+    def getTweetList(self):
         headers = self.__create_headers(config.bearer_token)
         url = self.__create_url(self.username)
         jsonTweets = self.__connect_to_endpoint(url, headers)
