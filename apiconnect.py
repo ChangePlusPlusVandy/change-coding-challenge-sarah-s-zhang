@@ -3,6 +3,7 @@ import requests
 
 class ApiConnect:
 
+
     def __init__(self, username):
         self.__username = username
         self.__authSuccess = False
@@ -10,9 +11,11 @@ class ApiConnect:
         url = self.__create_url(self.__username)
         self.__jsonResponse = self.__connect_to_endpoint(url, headers)
 
+
     def __create_headers(self, bearer_token):
         headers = {"Authorization": "Bearer {}".format(bearer_token)}
         return headers
+
 
     def __create_url(self, username):
         numTweets = 3200
@@ -21,6 +24,7 @@ class ApiConnect:
         )
         return url
     
+
     def __connect_to_endpoint(self, url, headers):
         response = requests.request("GET", url, headers=headers)
         if response.status_code != 200:
@@ -29,11 +33,14 @@ class ApiConnect:
             self.__authSuccess = True
             return response.json()
     
+
     def getUsername(self):
         return self.__username
     
+
     def getAuthSuccess(self):
         return self.__authSuccess
     
+
     def getTweetList(self):
         return self.__jsonResponse

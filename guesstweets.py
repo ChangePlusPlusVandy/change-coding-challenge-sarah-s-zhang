@@ -12,11 +12,13 @@ class GuessTweets:
         self.totalUserTwoCorrect = 0
         self.totalUserTwoIncorrect = 0
 
+
     def __randomTweetGenerator(self, userNumber, userOneTweets, userTwoTweets):
         if userNumber == 1:
             return random.choice(userOneTweets)
         else:
             return random.choice(userTwoTweets)
+
 
     def __verifyGuess(self, userNumber, guess):
         while guess != "1" and guess != "2":
@@ -37,12 +39,14 @@ class GuessTweets:
                 self.totalUserTwoIncorrect += 1
             print("\nIncorrect!")
 
+
     def getRandomTweet(self, userOneTweetList, userTwoTweetList):
         randomUser = random.randint(1, 2)
         jsonTweet = self.__randomTweetGenerator(randomUser, userOneTweetList, userTwoTweetList)
         print(jsonTweet['text'])
         guess = input("\nWho wrote this tweet? Enter '1' for @" + self.userOne + " OR '2' for @" + self.userTwo + ": ")
         self.__verifyGuess(randomUser, guess)
+    
     
     def getStatistics(self):
         print("\n****GUESSING GAME STATISTICS****")
