@@ -3,6 +3,7 @@ from apiconnect import ApiConnect
 from guesstweets import GuessTweets
 
 app = Flask(__name__)
+app.config.from_object('config.DevConfig')
 
 @app.route("/")
 def home():
@@ -23,6 +24,9 @@ def getUsername():
             error = "Error. Please enter a valid username."
             render_template("app.html", error=error)
 
+@app.route('/guess/')
+def guessUsername():
+    
 
 def main():
     userOneApi = getUsername()
