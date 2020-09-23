@@ -1,3 +1,5 @@
+# @author Sarah Zhang
+
 from apiconnect import ApiConnect
 from guesstweets import GuessTweets
 
@@ -5,6 +7,10 @@ def welcome():
     print("Hello! Welcome to the Tweet Guessing Game.")
     print("Given a tweet by one of two individuals, guess who wrote the tweet!\n")
 
+# checkUsername()
+# - prompts the user to input a Twitter username
+# - tries connecting to the Twitter API
+# - returns the ApiConnect object for that username
 def checkUsername():
     isValidUsername = False
     while isValidUsername == False:
