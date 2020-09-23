@@ -28,10 +28,10 @@ def main():
     userOneApi = getUsername()
     userTwoApi = getUsername()
     guesser = GuessTweets(userOneApi, userTwoApi)
-    repeat = "y"
-    while repeat == "y":
+    repeat = True
+    while repeat == True:
         guesser.getRandomTweet(userOneApi.getTweetList(), userTwoApi.getTweetList())
-        repeat = input("\nEnter 'y' to play again or any other key to stop: ").lower()
+        render_template("app.html", repeat=repeat)
 
     guesser.getStatistics()
 
