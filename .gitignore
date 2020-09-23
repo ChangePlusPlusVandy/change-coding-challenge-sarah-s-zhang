@@ -4,8 +4,5 @@ __pycache__/
 # Environments
 env/
 
-# Project specific files
-config.py
-
 # IDE generated
 .vscode/
