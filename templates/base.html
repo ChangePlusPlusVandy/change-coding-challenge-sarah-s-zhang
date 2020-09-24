@@ -7,22 +7,23 @@
     </head>
     <body style="background-color:#bae5ff;">
         <h1 class="header"><b>Tweet Guessing Game</b></h1><br>
-        {% block content %}{% endblock %}
         <div class="body-content">
+            {% block content %}
             <p>
                 Hello! Welcome to the Tweet Guessing Game. <br>
                 Given a tweet by one of two individuals, guess who wrote the tweet!
             </p>
-            <form method="POST">
-                <label for="fname">Twitter Username 1:</label><br>
-                <input type="text" id="fname" name="fname"><br><br>
-                <label for="lname">Twitter Username 2:</label><br>
-                <input type="text" id="lname" name="lname"><br><br>
+            <form action="/" method="POST">
+                <label for="username1">Twitter Username 1: @</label>
+                <input type="text" id="username1" name="username1" placeholder="elonmusk" required><br><br>
+                <label for="username2">Twitter Username 2: @</label>
+                <input type="text" id="username2" name="username2" placeholder="kanyewest" required><br><br>
                 <input type="submit" value="Submit">
             </form>
             <p style="color:red">
                 {{ error }}
             </p>
+            {% endblock %}
             <hr/>
             <footer>
                 <p>© Sarah Zhang 2020</p>

@@ -1,3 +1,4 @@
+from flask import Flask, render_template
 import json
 import random
 
@@ -21,8 +22,6 @@ class GuessTweets:
 
 
     def __verifyGuess(self, userNumber, guess):
-        while guess != "1" and guess != "2":
-            guess = input("Error. Please enter '1' or '2': ")
         guess = int(guess)
 
         self.totalTweetsGuessed += 1
@@ -43,8 +42,7 @@ class GuessTweets:
     def getRandomTweet(self, userOneTweetList, userTwoTweetList):
         randomUser = random.randint(1, 2)
         jsonTweet = self.__randomTweetGenerator(randomUser, userOneTweetList, userTwoTweetList)
-        print(jsonTweet['text'])
-        guess = input("\nWho wrote this tweet? Enter '1' for @" + self.userOne + " OR '2' for @" + self.userTwo + ": ")
+        return jsonTweet
         self.__verifyGuess(randomUser, guess)
     
     

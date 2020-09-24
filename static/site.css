@@ -13,6 +13,20 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.button {
+    border: none;
+    color: #000dbd;
+    border: none;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 120%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
 input[type=text]:focus {
     border: 3px solid #555;
     border-radius: 10px;
@@ -28,4 +42,4 @@ input[type=button], input[type=submit], input[type=reset] {
     text-decoration: none;
     margin: 4px 2px;
     cursor: pointer;
-  }
+}

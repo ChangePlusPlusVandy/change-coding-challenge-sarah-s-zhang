@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-    
+    <p>
+        Who wrote the tweet?<br><br>
+        <blockquote>{{ tweetText }}</blockquote>
+        <button type="button">@{{ usernameOne }}</button>
+        <button type="button">@{{ usernameTwo }}</button>
+    </p>
 {% endblock %}

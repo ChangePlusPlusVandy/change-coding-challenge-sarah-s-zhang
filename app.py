@@ -3,18 +3,13 @@ from apiconnect import ApiConnect
 from guesstweets import GuessTweets
 
 app = Flask(__name__)
-app.config.from_object('config.DevConfig')
 
-@app.route("/")
+@app.route('/')
 def home():
-    return render_template("app.html")
+    return render_template("base.html")
 
 
-@app.route('/', methods=['POST'])
-def getUsername():
-    text = request.form['text']
-    username = text.lower()
-
+def getUserApi(username):
     error = None
     while error == None:
         userApi = ApiConnect(username)
@@ -24,18 +19,23 @@ def getUsername():
             error = "Error. Please enter a valid username."
             render_template("app.html", error=error)
 
-@app.route('/guess/')
-def guessUsername():
-    
+
+@app.route('/', methods=['POST'])
+def processForm():
+    username1 = request.form['username1'].lower()
+    userOneApi = getUserApi(username1)
+    username2 = request.form['username2'].lower()
+    userTwoApi = getUserApi(username2)
+
+    guesser = GuessTweets(userOneApi, userTwoApi)
+    tweetText = guesser.getRandomTweet(userOneApi.getTweetList(), userTwoApi.getTweetList())
+    return render_template("guess.html", tweetText=tweetText, usernameOne=username1, usernameTwo=username2)
 
 def main():
-    userOneApi = getUsername()
-    userTwoApi = getUsername()
-    guesser = GuessTweets(userOneApi, userTwoApi)
     repeat = True
     while repeat == True:
         guesser.getRandomTweet(userOneApi.getTweetList(), userTwoApi.getTweetList())
-        render_template("app.html", repeat=repeat)
+        render_template("base.html", repeat=repeat)
 
     guesser.getStatistics()
 
