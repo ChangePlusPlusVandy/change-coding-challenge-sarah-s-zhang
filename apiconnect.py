@@ -19,7 +19,7 @@ class ApiConnect:
 
     def __create_url(self, username):
         numTweets = 3200
-        url = "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name={}&count={}&exclude_replies=true".format(
+        url = "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name={}&count={}&exclude_replies=true&include_rts=false".format(
             username, numTweets
         )
         return url
@@ -28,7 +28,7 @@ class ApiConnect:
     def __connect_to_endpoint(self, url, headers):
         response = requests.request("GET", url, headers=headers)
         if response.status_code != 200:
-            print("Failed to connect to Twitter. Please enter a valid username.")
+            return False
         else:
             self.__authSuccess = True
             return response.json()

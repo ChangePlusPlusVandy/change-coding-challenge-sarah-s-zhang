@@ -18,11 +18,9 @@
                 <input type="text" id="username1" name="username1" placeholder="elonmusk" required><br><br>
                 <label for="username2">Twitter Username 2: @</label>
                 <input type="text" id="username2" name="username2" placeholder="kanyewest" required><br><br>
+                <p style="color:red">{{ error }}</p>
                 <input type="submit" value="Submit">
             </form>
-            <p style="color:red">
-                {{ error }}
-            </p>
             {% endblock %}
             <hr/>
             <footer>

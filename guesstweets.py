@@ -5,13 +5,14 @@ import random
 class GuessTweets:
 
     def __init__(self, userOne, userTwo):
-        self.userOne = userOne
-        self.userTwo = userTwo
-        self.totalTweetsGuessed = 0
-        self.totalUserOneCorrect = 0
-        self.totalUserOneIncorrect = 0
-        self.totalUserTwoCorrect = 0
-        self.totalUserTwoIncorrect = 0
+        self.__userOne = userOne
+        self.__userTwo = userTwo
+        self.__userNum = 0
+        self.__totalTweetsGuessed = 0
+        self.__totalUserOneCorrect = 0
+        self.__totalUserOneIncorrect = 0
+        self.__totalUserTwoCorrect = 0
+        self.__totalUserTwoIncorrect = 0
 
 
     def __randomTweetGenerator(self, userNumber, userOneTweets, userTwoTweets):
@@ -21,39 +22,43 @@ class GuessTweets:
             return random.choice(userTwoTweets)
 
 
-    def __verifyGuess(self, userNumber, guess):
+    def verifyGuess(self, userNumber, guess):
         guess = int(guess)
 
-        self.totalTweetsGuessed += 1
-        if userNumber == guess:
-            if userNumber == 1:
-                self.totalUserOneCorrect += 1
+        self.__totalTweetsGuessed += 1
+        if self.__userNum == guess:
+            if self.__userNum == 1:
+                self.__totalUserOneCorrect += 1
             else:
-                self.totalUserTwoCorrect += 1
-            print("\nCorrect!")
+                self.__totalUserTwoCorrect += 1
+            return True
         else:
-            if userNumber == 1:
-                self.totalUserOneIncorrect += 1
+            if self.__userNum == 1:
+                self.__totalUserOneIncorrect += 1
+                return 1
             else:
-                self.totalUserTwoIncorrect += 1
-            print("\nIncorrect!")
+                self.__totalUserTwoIncorrect += 1
+            return False
 
 
     def getRandomTweet(self, userOneTweetList, userTwoTweetList):
-        randomUser = random.randint(1, 2)
-        jsonTweet = self.__randomTweetGenerator(randomUser, userOneTweetList, userTwoTweetList)
-        return jsonTweet
-        self.__verifyGuess(randomUser, guess)
+        self.__userNum = random.randint(1, 2)
+        jsonTweet = self.__randomTweetGenerator(self.__userNum, userOneTweetList, userTwoTweetList)
+        return jsonTweet['text']
+
+    
+    def getUserNum(self):
+        return self.__userNum
     
     
     def getStatistics(self):
         print("\n****GUESSING GAME STATISTICS****")
-        print("Total tweets guessed: ", self.totalTweetsGuessed)
-        print("- Total correct: ", self.totalUserOneCorrect + self.totalUserTwoCorrect)
-        print("- Total incorrect: ", self.totalUserOneIncorrect + self.totalUserTwoIncorrect)
-        print("Total @" + self.userOne, "tweets guessed:", self.totalUserOneCorrect + self.totalUserOneIncorrect)
-        print(" - Total @" + self.userOne, "correct:", self.totalUserOneCorrect)
-        print(" - Total @" + self.userOne, "incorrect:", self.totalUserOneIncorrect)
-        print("Total @" + self.userTwo, "tweets guessed:", self.totalUserTwoCorrect + self.totalUserTwoIncorrect)
-        print(" - Total @" + self.userTwo, "correct:", self.totalUserTwoCorrect)
-        print(" - Total @" + self.userTwo, "incorrect:", self.totalUserTwoIncorrect)
+        print("Total tweets guessed: ", self.__totalTweetsGuessed)
+        print("- Total correct: ", self.__totalUserOneCorrect + self.__totalUserTwoCorrect)
+        print("- Total incorrect: ", self.__totalUserOneIncorrect + self.__totalUserTwoIncorrect)
+        print("Total @" + self.__userOne, "tweets guessed:", self.__totalUserOneCorrect + self.__totalUserOneIncorrect)
+        print(" - Total @" + self.__userOne, "correct:", self.__totalUserOneCorrect)
+        print(" - Total @" + self.__userOne, "incorrect:", self.__totalUserOneIncorrect)
+        print("Total @" + self.__userTwo, "tweets guessed:", self.__totalUserTwoCorrect + self.__totalUserTwoIncorrect)
+        print(" - Total @" + self.__userTwo, "correct:", self.__totalUserTwoCorrect)
+        print(" - Total @" + self.__userTwo, "incorrect:", self.__totalUserTwoIncorrect)
