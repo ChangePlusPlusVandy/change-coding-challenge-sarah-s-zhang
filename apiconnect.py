@@ -25,7 +25,7 @@ class ApiConnect:
     #   create URL to access the API
     def __create_url(self, username):
         numTweets = 3200
-        url = "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name={}&count={}&exclude_replies=true".format(
+        url = "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name={}&count={}&exclude_replies=true&include_rts=false".format(
             username, numTweets
         )
         return url
