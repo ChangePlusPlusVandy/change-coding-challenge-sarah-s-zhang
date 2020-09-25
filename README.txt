@@ -20,4 +20,4 @@ You can take a look on the branch 'flaskApp'.
 
 How to run the Flask program (assuming you've done steps 1-4 above):
 1. Install Flask: '$ pip install Flask'
-2. Run the program in terminal: '$ python app.py'
+2. Run the program in terminal: '$ flask run'
